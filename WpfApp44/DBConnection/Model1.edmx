@@ -1,0 +1,752 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище oboiShopModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ed_iz">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id_mater" Type="int" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ed_izmer_chir">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id_prod" Type="int" />
+          <Property Name="name" Type="int" />
+        </EntityType>
+        <EntityType Name="Employe">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="surname" Type="nvarchar" MaxLength="50" />
+          <Property Name="lastaname" Type="nvarchar" MaxLength="50" />
+          <Property Name="phone" Type="int" />
+          <Property Name="id_user" Type="int" />
+          <Property Name="emal" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="materail_import">
+          <Key>
+            <PropertyRef Name="id_mater" />
+          </Key>
+          <Property Name="id_mater" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="id_type_mater" Type="int" />
+          <Property Name="price_mater" Type="int" />
+          <Property Name="kolich" Type="int" />
+          <Property Name="min_kolich" Type="int" />
+          <Property Name="kolich_yp" Type="int" />
+        </EntityType>
+        <EntityType Name="Material_type">
+          <Key>
+            <PropertyRef Name="id_type_mat" />
+          </Key>
+          <Property Name="id_type_mat" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="proc_brac" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Pathners">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id_emp" Type="int" />
+          <Property Name="id_pro" Type="int" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="id_product" />
+          </Key>
+          <Property Name="id_product" Type="int" Nullable="false" />
+          <Property Name="id_type_product" Type="int" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="articul" Type="int" />
+          <Property Name="price_partner" Type="int" />
+          <Property Name="id_chir" Type="int" />
+        </EntityType>
+        <EntityType Name="Product_material">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id_Product" Type="int" />
+          <Property Name="id_Material" Type="int" />
+          <Property Name="kolich_mater" Type="int" />
+        </EntityType>
+        <EntityType Name="product_type">
+          <Key>
+            <PropertyRef Name="id_type" />
+          </Key>
+          <Property Name="id_type" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="koif_type0" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id_role" />
+          </Key>
+          <Property Name="id_role" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id_user" />
+          </Key>
+          <Property Name="id_user" Type="int" Nullable="false" />
+          <Property Name="login" Type="nvarchar" MaxLength="50" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" />
+          <Property Name="id_role" Type="int" />
+        </EntityType>
+        <Association Name="FK_Employe_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Employe" Type="Self.Employe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="Employe">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_materail_import_ed_iz">
+          <End Role="ed_iz" Type="Self.ed_iz" Multiplicity="0..1" />
+          <End Role="materail_import" Type="Self.materail_import" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ed_iz">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="materail_import">
+              <PropertyRef Name="kolich_yp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_materail_import_Material_type">
+          <End Role="Material_type" Type="Self.Material_type" Multiplicity="0..1" />
+          <End Role="materail_import" Type="Self.materail_import" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material_type">
+              <PropertyRef Name="id_type_mat" />
+            </Principal>
+            <Dependent Role="materail_import">
+              <PropertyRef Name="id_type_mater" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pathners_Employe">
+          <End Role="Employe" Type="Self.Employe" Multiplicity="0..1" />
+          <End Role="Pathners" Type="Self.Pathners" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employe">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pathners">
+              <PropertyRef Name="id_emp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pathners_product">
+          <End Role="product" Type="Self.product" Multiplicity="0..1" />
+          <End Role="Pathners" Type="Self.Pathners" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="id_product" />
+            </Principal>
+            <Dependent Role="Pathners">
+              <PropertyRef Name="id_pro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_product_ed_izmer_chir">
+          <End Role="ed_izmer_chir" Type="Self.ed_izmer_chir" Multiplicity="0..1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ed_izmer_chir">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="id_chir" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_material_materail_import">
+          <End Role="materail_import" Type="Self.materail_import" Multiplicity="0..1" />
+          <End Role="Product_material" Type="Self.Product_material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="materail_import">
+              <PropertyRef Name="id_mater" />
+            </Principal>
+            <Dependent Role="Product_material">
+              <PropertyRef Name="id_Material" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_material_product">
+          <End Role="product" Type="Self.product" Multiplicity="0..1" />
+          <End Role="Product_material" Type="Self.Product_material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="id_product" />
+            </Principal>
+            <Dependent Role="Product_material">
+              <PropertyRef Name="id_Product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_product_product_type">
+          <End Role="product_type" Type="Self.product_type" Multiplicity="0..1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product_type">
+              <PropertyRef Name="id_type" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="id_type_product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="id_role" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="id_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище oboiShopModelContainer">
+          <EntitySet Name="ed_iz" EntityType="Self.ed_iz" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ed_izmer_chir" EntityType="Self.ed_izmer_chir" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employe" EntityType="Self.Employe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="materail_import" EntityType="Self.materail_import" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Material_type" EntityType="Self.Material_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pathners" EntityType="Self.Pathners" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_material" EntityType="Self.Product_material" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="product_type" EntityType="Self.product_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Employe_Users" Association="Self.FK_Employe_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Employe" EntitySet="Employe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_materail_import_ed_iz" Association="Self.FK_materail_import_ed_iz">
+            <End Role="ed_iz" EntitySet="ed_iz" />
+            <End Role="materail_import" EntitySet="materail_import" />
+          </AssociationSet>
+          <AssociationSet Name="FK_materail_import_Material_type" Association="Self.FK_materail_import_Material_type">
+            <End Role="Material_type" EntitySet="Material_type" />
+            <End Role="materail_import" EntitySet="materail_import" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pathners_Employe" Association="Self.FK_Pathners_Employe">
+            <End Role="Employe" EntitySet="Employe" />
+            <End Role="Pathners" EntitySet="Pathners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pathners_product" Association="Self.FK_Pathners_product">
+            <End Role="product" EntitySet="product" />
+            <End Role="Pathners" EntitySet="Pathners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_product_ed_izmer_chir" Association="Self.FK_product_ed_izmer_chir">
+            <End Role="ed_izmer_chir" EntitySet="ed_izmer_chir" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_material_materail_import" Association="Self.FK_Product_material_materail_import">
+            <End Role="materail_import" EntitySet="materail_import" />
+            <End Role="Product_material" EntitySet="Product_material" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_material_product" Association="Self.FK_Product_material_product">
+            <End Role="product" EntitySet="product" />
+            <End Role="Product_material" EntitySet="Product_material" />
+          </AssociationSet>
+          <AssociationSet Name="FK_product_product_type" Association="Self.FK_product_product_type">
+            <End Role="product_type" EntitySet="product_type" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Role" Association="Self.FK_Users_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="oboiShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ed_iz">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id_mater" Type="Int32" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="materail_import" Relationship="Self.FK_materail_import_ed_iz" FromRole="ed_iz" ToRole="materail_import" />
+        </EntityType>
+        <EntityType Name="ed_izmer_chir">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id_prod" Type="Int32" />
+          <Property Name="name" Type="Int32" />
+          <NavigationProperty Name="product" Relationship="Self.FK_product_ed_izmer_chir" FromRole="ed_izmer_chir" ToRole="product" />
+        </EntityType>
+        <EntityType Name="Employe">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lastaname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="Int32" />
+          <Property Name="id_user" Type="Int32" />
+          <Property Name="emal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Employe_Users" FromRole="Employe" ToRole="Users" />
+          <NavigationProperty Name="Pathners" Relationship="Self.FK_Pathners_Employe" FromRole="Employe" ToRole="Pathners" />
+        </EntityType>
+        <EntityType Name="materail_import">
+          <Key>
+            <PropertyRef Name="id_mater" />
+          </Key>
+          <Property Name="id_mater" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="id_type_mater" Type="Int32" />
+          <Property Name="price_mater" Type="Int32" />
+          <Property Name="kolich" Type="Int32" />
+          <Property Name="min_kolich" Type="Int32" />
+          <Property Name="kolich_yp" Type="Int32" />
+          <NavigationProperty Name="ed_iz" Relationship="Self.FK_materail_import_ed_iz" FromRole="materail_import" ToRole="ed_iz" />
+          <NavigationProperty Name="Material_type" Relationship="Self.FK_materail_import_Material_type" FromRole="materail_import" ToRole="Material_type" />
+          <NavigationProperty Name="Product_material" Relationship="Self.FK_Product_material_materail_import" FromRole="materail_import" ToRole="Product_material" />
+        </EntityType>
+        <EntityType Name="Material_type">
+          <Key>
+            <PropertyRef Name="id_type_mat" />
+          </Key>
+          <Property Name="id_type_mat" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="proc_brac" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="materail_import" Relationship="Self.FK_materail_import_Material_type" FromRole="Material_type" ToRole="materail_import" />
+        </EntityType>
+        <EntityType Name="Pathners">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id_emp" Type="Int32" />
+          <Property Name="id_pro" Type="Int32" />
+          <NavigationProperty Name="Employe" Relationship="Self.FK_Pathners_Employe" FromRole="Pathners" ToRole="Employe" />
+          <NavigationProperty Name="product" Relationship="Self.FK_Pathners_product" FromRole="Pathners" ToRole="product" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="id_product" />
+          </Key>
+          <Property Name="id_product" Type="Int32" Nullable="false" />
+          <Property Name="id_type_product" Type="Int32" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="articul" Type="Int32" />
+          <Property Name="price_partner" Type="Int32" />
+          <Property Name="id_chir" Type="Int32" />
+          <NavigationProperty Name="ed_izmer_chir" Relationship="Self.FK_product_ed_izmer_chir" FromRole="product" ToRole="ed_izmer_chir" />
+          <NavigationProperty Name="Pathners" Relationship="Self.FK_Pathners_product" FromRole="product" ToRole="Pathners" />
+          <NavigationProperty Name="Product_material" Relationship="Self.FK_Product_material_product" FromRole="product" ToRole="Product_material" />
+          <NavigationProperty Name="product_type" Relationship="Self.FK_product_product_type" FromRole="product" ToRole="product_type" />
+        </EntityType>
+        <EntityType Name="Product_material">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id_Product" Type="Int32" />
+          <Property Name="id_Material" Type="Int32" />
+          <Property Name="kolich_mater" Type="Int32" />
+          <NavigationProperty Name="materail_import" Relationship="Self.FK_Product_material_materail_import" FromRole="Product_material" ToRole="materail_import" />
+          <NavigationProperty Name="product" Relationship="Self.FK_Product_material_product" FromRole="Product_material" ToRole="product" />
+        </EntityType>
+        <EntityType Name="product_type">
+          <Key>
+            <PropertyRef Name="id_type" />
+          </Key>
+          <Property Name="id_type" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="koif_type0" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="product" Relationship="Self.FK_product_product_type" FromRole="product_type" ToRole="product" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id_role" />
+          </Key>
+          <Property Name="id_role" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Users_Role" FromRole="Role" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id_user" />
+          </Key>
+          <Property Name="id_user" Type="Int32" Nullable="false" />
+          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="id_role" Type="Int32" />
+          <NavigationProperty Name="Employe" Relationship="Self.FK_Employe_Users" FromRole="Users" ToRole="Employe" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_Users_Role" FromRole="Users" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK_materail_import_ed_iz">
+          <End Role="ed_iz" Type="Self.ed_iz" Multiplicity="0..1" />
+          <End Role="materail_import" Type="Self.materail_import" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ed_iz">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="materail_import">
+              <PropertyRef Name="kolich_yp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_product_ed_izmer_chir">
+          <End Role="ed_izmer_chir" Type="Self.ed_izmer_chir" Multiplicity="0..1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ed_izmer_chir">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="id_chir" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employe_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Employe" Type="Self.Employe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="Employe">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pathners_Employe">
+          <End Role="Employe" Type="Self.Employe" Multiplicity="0..1" />
+          <End Role="Pathners" Type="Self.Pathners" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employe">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pathners">
+              <PropertyRef Name="id_emp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_materail_import_Material_type">
+          <End Role="Material_type" Type="Self.Material_type" Multiplicity="0..1" />
+          <End Role="materail_import" Type="Self.materail_import" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material_type">
+              <PropertyRef Name="id_type_mat" />
+            </Principal>
+            <Dependent Role="materail_import">
+              <PropertyRef Name="id_type_mater" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_material_materail_import">
+          <End Role="materail_import" Type="Self.materail_import" Multiplicity="0..1" />
+          <End Role="Product_material" Type="Self.Product_material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="materail_import">
+              <PropertyRef Name="id_mater" />
+            </Principal>
+            <Dependent Role="Product_material">
+              <PropertyRef Name="id_Material" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pathners_product">
+          <End Role="product" Type="Self.product" Multiplicity="0..1" />
+          <End Role="Pathners" Type="Self.Pathners" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="id_product" />
+            </Principal>
+            <Dependent Role="Pathners">
+              <PropertyRef Name="id_pro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_material_product">
+          <End Role="product" Type="Self.product" Multiplicity="0..1" />
+          <End Role="Product_material" Type="Self.Product_material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="id_product" />
+            </Principal>
+            <Dependent Role="Product_material">
+              <PropertyRef Name="id_Product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_product_product_type">
+          <End Role="product_type" Type="Self.product_type" Multiplicity="0..1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product_type">
+              <PropertyRef Name="id_type" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="id_type_product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="id_role" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="id_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="oboiShopEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ed_iz" EntityType="Self.ed_iz" />
+          <EntitySet Name="ed_izmer_chir" EntityType="Self.ed_izmer_chir" />
+          <EntitySet Name="Employe" EntityType="Self.Employe" />
+          <EntitySet Name="materail_import" EntityType="Self.materail_import" />
+          <EntitySet Name="Material_type" EntityType="Self.Material_type" />
+          <EntitySet Name="Pathners" EntityType="Self.Pathners" />
+          <EntitySet Name="product" EntityType="Self.product" />
+          <EntitySet Name="Product_material" EntityType="Self.Product_material" />
+          <EntitySet Name="product_type" EntityType="Self.product_type" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_materail_import_ed_iz" Association="Self.FK_materail_import_ed_iz">
+            <End Role="ed_iz" EntitySet="ed_iz" />
+            <End Role="materail_import" EntitySet="materail_import" />
+          </AssociationSet>
+          <AssociationSet Name="FK_product_ed_izmer_chir" Association="Self.FK_product_ed_izmer_chir">
+            <End Role="ed_izmer_chir" EntitySet="ed_izmer_chir" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employe_Users" Association="Self.FK_Employe_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Employe" EntitySet="Employe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pathners_Employe" Association="Self.FK_Pathners_Employe">
+            <End Role="Employe" EntitySet="Employe" />
+            <End Role="Pathners" EntitySet="Pathners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_materail_import_Material_type" Association="Self.FK_materail_import_Material_type">
+            <End Role="Material_type" EntitySet="Material_type" />
+            <End Role="materail_import" EntitySet="materail_import" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_material_materail_import" Association="Self.FK_Product_material_materail_import">
+            <End Role="materail_import" EntitySet="materail_import" />
+            <End Role="Product_material" EntitySet="Product_material" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pathners_product" Association="Self.FK_Pathners_product">
+            <End Role="product" EntitySet="product" />
+            <End Role="Pathners" EntitySet="Pathners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_material_product" Association="Self.FK_Product_material_product">
+            <End Role="product" EntitySet="product" />
+            <End Role="Product_material" EntitySet="Product_material" />
+          </AssociationSet>
+          <AssociationSet Name="FK_product_product_type" Association="Self.FK_product_product_type">
+            <End Role="product_type" EntitySet="product_type" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Role" Association="Self.FK_Users_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище oboiShopModelContainer" CdmEntityContainer="oboiShopEntities">
+          <EntitySetMapping Name="ed_iz">
+            <EntityTypeMapping TypeName="oboiShopModel.ed_iz">
+              <MappingFragment StoreEntitySet="ed_iz">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_mater" ColumnName="id_mater" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ed_izmer_chir">
+            <EntityTypeMapping TypeName="oboiShopModel.ed_izmer_chir">
+              <MappingFragment StoreEntitySet="ed_izmer_chir">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_prod" ColumnName="id_prod" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employe">
+            <EntityTypeMapping TypeName="oboiShopModel.Employe">
+              <MappingFragment StoreEntitySet="Employe">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="lastaname" ColumnName="lastaname" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="emal" ColumnName="emal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="materail_import">
+            <EntityTypeMapping TypeName="oboiShopModel.materail_import">
+              <MappingFragment StoreEntitySet="materail_import">
+                <ScalarProperty Name="id_mater" ColumnName="id_mater" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id_type_mater" ColumnName="id_type_mater" />
+                <ScalarProperty Name="price_mater" ColumnName="price_mater" />
+                <ScalarProperty Name="kolich" ColumnName="kolich" />
+                <ScalarProperty Name="min_kolich" ColumnName="min_kolich" />
+                <ScalarProperty Name="kolich_yp" ColumnName="kolich_yp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Material_type">
+            <EntityTypeMapping TypeName="oboiShopModel.Material_type">
+              <MappingFragment StoreEntitySet="Material_type">
+                <ScalarProperty Name="id_type_mat" ColumnName="id_type_mat" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="proc_brac" ColumnName="proc_brac" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pathners">
+            <EntityTypeMapping TypeName="oboiShopModel.Pathners">
+              <MappingFragment StoreEntitySet="Pathners">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_emp" ColumnName="id_emp" />
+                <ScalarProperty Name="id_pro" ColumnName="id_pro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="product">
+            <EntityTypeMapping TypeName="oboiShopModel.product">
+              <MappingFragment StoreEntitySet="product">
+                <ScalarProperty Name="id_product" ColumnName="id_product" />
+                <ScalarProperty Name="id_type_product" ColumnName="id_type_product" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="articul" ColumnName="articul" />
+                <ScalarProperty Name="price_partner" ColumnName="price_partner" />
+                <ScalarProperty Name="id_chir" ColumnName="id_chir" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_material">
+            <EntityTypeMapping TypeName="oboiShopModel.Product_material">
+              <MappingFragment StoreEntitySet="Product_material">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_Product" ColumnName="id_Product" />
+                <ScalarProperty Name="id_Material" ColumnName="id_Material" />
+                <ScalarProperty Name="kolich_mater" ColumnName="kolich_mater" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="product_type">
+            <EntityTypeMapping TypeName="oboiShopModel.product_type">
+              <MappingFragment StoreEntitySet="product_type">
+                <ScalarProperty Name="id_type" ColumnName="id_type" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="koif_type0" ColumnName="koif_type0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="oboiShopModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="id_role" ColumnName="id_role" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="oboiShopModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="oboiShopModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="id_role" ColumnName="id_role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
